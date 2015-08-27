@@ -22,7 +22,6 @@
         <th>
             @Html.DisplayNameFor(model => model.TITLE)
         </th>
-
         <th>
             @Html.DisplayNameFor(model => model.BUD_DTM)
         </th>
@@ -38,10 +37,7 @@
     @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TITLE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BODY)
+                @Html.ActionLink(item.TITLE, "Details", new { id = item.ID })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BUD_DTM)
@@ -52,10 +48,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AUTHOR)
             </td>
+
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class="btn btn-sm btn-default"})
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-sm btn-default" })
             </td>
         </tr>
     }
