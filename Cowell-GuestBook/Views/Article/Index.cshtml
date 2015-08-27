@@ -10,22 +10,19 @@
 
         @* 方法2：將資料做成部分頁面(Partial View)，直接在本次生命週期內使用，並給予該頁面所需要的Model *@
         @Html.Partial("_ForumDetail", ForumDetailModel)
+        <p>
+            @* 新建文章某討論區的文章，直接給予討論區參數，不讓使用者在新增文章頁面選取，同時，在所有文章列表，不允許新增文章 *@
+            @Html.ActionLink("發帖子", "Create", new { ForumID = ForumDetailModel.ID }, new { @class="btn btn-success"})
+        </p>
     }
 }
 
-
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.TITLE)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BODY)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.BUD_DTM)
         </th>
@@ -35,38 +32,32 @@
         <th>
             @Html.DisplayNameFor(model => model.AUTHOR)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Forum.TITLE)
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TITLE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BODY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BUD_DTM)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UPD_DTM)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AUTHOR)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Forum.TITLE)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TITLE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BODY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BUD_DTM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UPD_DTM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AUTHOR)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
