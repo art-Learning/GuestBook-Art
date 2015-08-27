@@ -41,21 +41,18 @@ namespace Cowell_GuestBook.Controllers
             return View();
         }
 
-        // POST: Forum/Create
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,TITLE,BUD_DTM")] Forum forum)
+        public ActionResult Create(FormCollection frm)
         {
-            if (ModelState.IsValid)
-            {
-                db.Forum.Add(forum);
+            var obj = new Forum();
+            obj.BUD_DTM = DateTime.Now;
+            if (TryUpdateModel<Forum>(obj, "", frm.AllKeys, new string[] { })) {
+                db.Forum.Add(obj);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("index");
             }
-
-            return View(forum);
+            return View(obj);
         }
 
         // GET: Forum/Edit/5
@@ -73,20 +70,17 @@ namespace Cowell_GuestBook.Controllers
             return View(forum);
         }
 
-        // POST: Forum/Edit/5
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,TITLE,BUD_DTM")] Forum forum)
+        public ActionResult Edit(int id,FormCollection frm)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(forum).State = EntityState.Modified;
+            var obj = db.Forum.Find(id);
+            if (TryUpdateModel<Forum>(obj, "", frm.AllKeys, new string[] { "BUD_DTM" })) {
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(forum);
+            return View(obj);
         }
 
         // GET: Forum/Delete/5

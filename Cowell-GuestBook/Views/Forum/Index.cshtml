@@ -14,24 +14,19 @@
         <th>
             @Html.DisplayNameFor(model => model.TITLE)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BUD_DTM)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.TITLE)
+            @Html.ActionLink(item.TITLE, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BUD_DTM)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            <div class="pull-right">
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-sm btn-default" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-sm btn-default" })
+            </div>
         </td>
     </tr>
 }
