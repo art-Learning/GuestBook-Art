@@ -20,7 +20,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.TITLE, "Details", new { id = item.ID })
+            @Html.ActionLink(item.TITLE, "index","Article", new { Forumid = item.ID },null)
         </td>
         <td>
             <div class="pull-right">

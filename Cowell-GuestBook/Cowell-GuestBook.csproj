@@ -273,6 +273,7 @@
     <Content Include="Views\reply\Details.cshtml" />
     <Content Include="Views\reply\Edit.cshtml" />
     <Content Include="Views\reply\Index.cshtml" />
+    <Content Include="Views\Shared\_ForumDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

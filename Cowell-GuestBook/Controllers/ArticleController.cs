@@ -23,6 +23,7 @@ namespace Cowell_GuestBook.Controllers
             } else {
                 // Get: /Article?forumID=12
                 objs=db.ARTICLE.Where(x=>x.FORUM_ID==ForumID).OrderBy(x=>x.BUD_DTM);
+                ViewData["ForumDetailModel"] = db.Forum.Find(ForumID);
             }
             return View(objs.ToList());
         }

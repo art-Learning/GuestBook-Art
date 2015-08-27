@@ -1,10 +1,19 @@
 ﻿@model IEnumerable<Cowell_GuestBook.Models.ARTICLE>
 
 @{
-    ViewBag.Title = "Index";
+    Cowell_GuestBook.Models.Forum ForumDetailModel = ViewData["ForumDetailModel"] as Cowell_GuestBook.Models.Forum;
+}
+@{
+    if (ForumDetailModel != null) {
+        @*方法1：透過Html.action完整跑一次生命週期，把明細Load進來，有點像是IFRAME的概念*@
+        @*@Html.Action("details", "forum", new { id=Model.FirstOrDefault().FORUM_ID})*@
+
+        @* 方法2：將資料做成部分頁面(Partial View)，直接在本次生命週期內使用，並給予該頁面所需要的Model *@
+        @Html.Partial("_ForumDetail", ForumDetailModel)
+    }
 }
 
-<h2>Index</h2>
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
