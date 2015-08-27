@@ -126,14 +126,25 @@
     <Compile Include="Models\ARTICLE.cs">
       <DependentUpon>GB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ARTICLE.Partial.cs">
+      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ARTICLEREPLY.cs">
       <DependentUpon>GB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ARTICLEREPLY.Partial.cs">
+      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ARTICLEREPLYRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ARTICLERepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EFGeneratePartialClass.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EFRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
@@ -143,6 +154,9 @@
     </Compile>
     <Compile Include="Models\Forum.cs">
       <DependentUpon>GB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Forum.Partial.cs">
+      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ForumRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
@@ -185,6 +199,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\EFGeneratePartialClass.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EFGeneratePartialClass.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\GB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GB.edmx</DependentUpon>
