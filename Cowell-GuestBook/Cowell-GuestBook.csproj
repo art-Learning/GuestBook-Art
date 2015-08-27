@@ -119,7 +119,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\replyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -255,6 +258,21 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Article\Create.cshtml" />
+    <Content Include="Views\Article\Delete.cshtml" />
+    <Content Include="Views\Article\Details.cshtml" />
+    <Content Include="Views\Article\Edit.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
+    <Content Include="Views\Forum\Create.cshtml" />
+    <Content Include="Views\Forum\Delete.cshtml" />
+    <Content Include="Views\Forum\Details.cshtml" />
+    <Content Include="Views\Forum\Edit.cshtml" />
+    <Content Include="Views\Forum\Index.cshtml" />
+    <Content Include="Views\reply\Create.cshtml" />
+    <Content Include="Views\reply\Delete.cshtml" />
+    <Content Include="Views\reply\Details.cshtml" />
+    <Content Include="Views\reply\Edit.cshtml" />
+    <Content Include="Views\reply\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
