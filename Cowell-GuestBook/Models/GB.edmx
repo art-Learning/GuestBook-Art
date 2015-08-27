@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MVCTESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ARTICLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FORUM_ID" Type="int" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BODY" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BUD_DTM" Type="datetime" Nullable="false" />
+          <Property Name="UPD_DTM" Type="datetime" Nullable="false" />
+          <Property Name="AUTHOR" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ARTICLEREPLY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ARTICLE_ID" Type="int" Nullable="false" />
+          <Property Name="BODY" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BUD_DTM" Type="datetime" Nullable="false" />
+          <Property Name="AUTHOR" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BUD_DTM" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ARTICLE_Forum">
+          <End Role="Forum" Type="Self.Forum" Multiplicity="1" />
+          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forum">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ARTICLE">
+              <PropertyRef Name="FORUM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ARTICLEREPLY_ARTICLE">
+          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="1" />
+          <End Role="ARTICLEREPLY" Type="Self.ARTICLEREPLY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ARTICLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ARTICLEREPLY">
+              <PropertyRef Name="ARTICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCTESTModelStoreContainer">
+          <EntitySet Name="ARTICLE" EntityType="Self.ARTICLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ARTICLEREPLY" EntityType="Self.ARTICLEREPLY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Forum" EntityType="Self.Forum" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ARTICLE_Forum" Association="Self.FK_ARTICLE_Forum">
+            <End Role="Forum" EntitySet="Forum" />
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ARTICLEREPLY_ARTICLE" Association="Self.FK_ARTICLEREPLY_ARTICLE">
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+            <End Role="ARTICLEREPLY" EntitySet="ARTICLEREPLY" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVCTESTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ARTICLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FORUM_ID" Type="Int32" Nullable="false" />
+          <Property Name="TITLE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BODY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BUD_DTM" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPD_DTM" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AUTHOR" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Forum" Relationship="Self.FK_ARTICLE_Forum" FromRole="ARTICLE" ToRole="Forum" />
+          <NavigationProperty Name="ARTICLEREPLY" Relationship="Self.FK_ARTICLEREPLY_ARTICLE" FromRole="ARTICLE" ToRole="ARTICLEREPLY" />
+        </EntityType>
+        <EntityType Name="ARTICLEREPLY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ARTICLE_ID" Type="Int32" Nullable="false" />
+          <Property Name="BODY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BUD_DTM" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AUTHOR" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ARTICLE" Relationship="Self.FK_ARTICLEREPLY_ARTICLE" FromRole="ARTICLEREPLY" ToRole="ARTICLE" />
+        </EntityType>
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TITLE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BUD_DTM" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ARTICLE" Relationship="Self.FK_ARTICLE_Forum" FromRole="Forum" ToRole="ARTICLE" />
+        </EntityType>
+        <Association Name="FK_ARTICLE_Forum">
+          <End Role="Forum" Type="Self.Forum" Multiplicity="1" />
+          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forum">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ARTICLE">
+              <PropertyRef Name="FORUM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ARTICLEREPLY_ARTICLE">
+          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="1" />
+          <End Role="ARTICLEREPLY" Type="Self.ARTICLEREPLY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ARTICLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ARTICLEREPLY">
+              <PropertyRef Name="ARTICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCTESTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ARTICLE" EntityType="Self.ARTICLE" />
+          <EntitySet Name="ARTICLEREPLY" EntityType="Self.ARTICLEREPLY" />
+          <EntitySet Name="Forum" EntityType="Self.Forum" />
+          <AssociationSet Name="FK_ARTICLE_Forum" Association="Self.FK_ARTICLE_Forum">
+            <End Role="Forum" EntitySet="Forum" />
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ARTICLEREPLY_ARTICLE" Association="Self.FK_ARTICLEREPLY_ARTICLE">
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+            <End Role="ARTICLEREPLY" EntitySet="ARTICLEREPLY" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVCTESTModelStoreContainer" CdmEntityContainer="MVCTESTEntities">
+          <EntitySetMapping Name="ARTICLE">
+            <EntityTypeMapping TypeName="MVCTESTModel.ARTICLE">
+              <MappingFragment StoreEntitySet="ARTICLE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FORUM_ID" ColumnName="FORUM_ID" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="BODY" ColumnName="BODY" />
+                <ScalarProperty Name="BUD_DTM" ColumnName="BUD_DTM" />
+                <ScalarProperty Name="UPD_DTM" ColumnName="UPD_DTM" />
+                <ScalarProperty Name="AUTHOR" ColumnName="AUTHOR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ARTICLEREPLY">
+            <EntityTypeMapping TypeName="MVCTESTModel.ARTICLEREPLY">
+              <MappingFragment StoreEntitySet="ARTICLEREPLY">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ARTICLE_ID" ColumnName="ARTICLE_ID" />
+                <ScalarProperty Name="BODY" ColumnName="BODY" />
+                <ScalarProperty Name="BUD_DTM" ColumnName="BUD_DTM" />
+                <ScalarProperty Name="AUTHOR" ColumnName="AUTHOR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Forum">
+            <EntityTypeMapping TypeName="MVCTESTModel.Forum">
+              <MappingFragment StoreEntitySet="Forum">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="BUD_DTM" ColumnName="BUD_DTM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
