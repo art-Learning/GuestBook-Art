@@ -14,11 +14,17 @@ namespace Cowell_GuestBook.Controllers
     {
         private MVCTESTEntities db = new MVCTESTEntities();
 
-        // GET: Article
-        public ActionResult Index()
+        public ActionResult Index(int? ForumID)
         {
-            var aRTICLE = db.ARTICLE.Include(a => a.Forum);
-            return View(aRTICLE.ToList());
+            IQueryable<ARTICLE> objs;
+            if (ForumID == null) {
+                // Get: /Article
+                objs=db.ARTICLE.Include(a => a.Forum);
+            } else {
+                // Get: /Article?forumID=12
+                objs=db.ARTICLE.Where(x=>x.FORUM_ID==ForumID).OrderBy(x=>x.BUD_DTM);
+            }
+            return View(objs.ToList());
         }
 
         // GET: Article/Details/5
