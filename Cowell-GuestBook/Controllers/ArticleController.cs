@@ -34,6 +34,7 @@ namespace Cowell_GuestBook.Controllers {
             if (aRTICLE == null) {
                 return HttpNotFound();
             }
+
             return View(aRTICLE);
         }
 

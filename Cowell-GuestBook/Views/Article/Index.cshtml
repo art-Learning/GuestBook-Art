@@ -37,8 +37,15 @@
     @foreach (var item in Model) {
         <tr>
             <td>
+                @{
+        if (item.ARTICLEREPLY.Count() > 10) {
+            <span class="label label-danger">爆</span>
+        }
+                }
                 @Html.ActionLink(item.TITLE, "Details", new { id = item.ID })
+                <span class="badge">@item.ARTICLEREPLY.Count()</span>
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.BUD_DTM)
             </td>

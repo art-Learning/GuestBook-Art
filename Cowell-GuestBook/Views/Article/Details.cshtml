@@ -3,11 +3,8 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-
 <div>
-    <h4>ARTICLE</h4>
+    <h4>@Html.DisplayFor(model => model.Forum.TITLE)</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,7 +14,13 @@
         <dd>
             @Html.DisplayFor(model => model.TITLE)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AUTHOR)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.AUTHOR)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.BODY)
         </dt>
@@ -41,26 +44,15 @@
         <dd>
             @Html.DisplayFor(model => model.UPD_DTM)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AUTHOR)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AUTHOR)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Forum.TITLE)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Forum.TITLE)
-        </dd>
-
     </dl>
 </div>
+
+
+@* 在文章內才可以回復 *@
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("回覆文章", "Create", "Reply", new { articleID = Model.ID }, new { @class="btn btn-success"})
 </p>
+
+@*@Html.Action("index", "reply", new { articleID = Model.ID})*@
+@* 方法三，給Partial View的MODEL直接在這邊取得，不走Controller *@
+@Html.Partial("_ReplyList",Model.ARTICLEREPLY.OrderBy(x=>x.BUD_DTM).ToList())

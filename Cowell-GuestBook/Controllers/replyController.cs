@@ -8,102 +8,87 @@ using System.Web;
 using System.Web.Mvc;
 using Cowell_GuestBook.Models;
 
-namespace Cowell_GuestBook.Controllers
-{
-    public class replyController : Controller
-    {
+namespace Cowell_GuestBook.Controllers {
+    public class replyController : Controller {
         private MVCTESTEntities db = new MVCTESTEntities();
 
         // GET: reply
-        public ActionResult Index()
-        {
-            var aRTICLEREPLY = db.ARTICLEREPLY.Include(a => a.ARTICLE);
-            return View(aRTICLEREPLY.ToList());
+        public ActionResult Index(int? ArticleID) {
+            IQueryable<ARTICLEREPLY> objs;
+            if (ArticleID == null) {
+                objs = db.ARTICLEREPLY.Include(a => a.ARTICLE);
+            } else {
+                objs = db.ARTICLEREPLY.Where(x => x.ARTICLE_ID == ArticleID).OrderBy(x => x.BUD_DTM);
+                ViewData["ArticleID"] = ArticleID;
+            }
+            return View(objs.ToList());
         }
 
         // GET: reply/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Details(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ARTICLEREPLY aRTICLEREPLY = db.ARTICLEREPLY.Find(id);
-            if (aRTICLEREPLY == null)
-            {
+            if (aRTICLEREPLY == null) {
                 return HttpNotFound();
             }
             return View(aRTICLEREPLY);
         }
 
         // GET: reply/Create
-        public ActionResult Create()
-        {
-            ViewBag.ARTICLE_ID = new SelectList(db.ARTICLE, "ID", "TITLE");
+        public ActionResult Create(int? articleID) {
+            if (articleID == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewData["articleID"] = articleID;
             return View();
         }
 
-        // POST: reply/Create
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ARTICLE_ID,BODY,BUD_DTM,AUTHOR")] ARTICLEREPLY aRTICLEREPLY)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ARTICLEREPLY.Add(aRTICLEREPLY);
+        public ActionResult Create(FormCollection frm) {
+            ARTICLEREPLY obj = new ARTICLEREPLY();
+            obj.BUD_DTM = DateTime.Now;
+            if (TryUpdateModel<ARTICLEREPLY>(obj, "", frm.AllKeys, new string[] {"" })) {
+                db.ARTICLEREPLY.Add(obj);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("details", "article", new { ID = obj.ARTICLE_ID });
             }
-
-            ViewBag.ARTICLE_ID = new SelectList(db.ARTICLE, "ID", "TITLE", aRTICLEREPLY.ARTICLE_ID);
-            return View(aRTICLEREPLY);
+            return View(obj);
         }
 
         // GET: reply/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Edit(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ARTICLEREPLY aRTICLEREPLY = db.ARTICLEREPLY.Find(id);
-            if (aRTICLEREPLY == null)
-            {
+            if (aRTICLEREPLY == null) {
                 return HttpNotFound();
             }
-            ViewBag.ARTICLE_ID = new SelectList(db.ARTICLE, "ID", "TITLE", aRTICLEREPLY.ARTICLE_ID);
+            
             return View(aRTICLEREPLY);
         }
 
-        // POST: reply/Edit/5
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ARTICLE_ID,BODY,BUD_DTM,AUTHOR")] ARTICLEREPLY aRTICLEREPLY)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(aRTICLEREPLY).State = EntityState.Modified;
+        public ActionResult Edit(int id,FormCollection frm) {
+            var obj = db.ARTICLEREPLY.Find(id);
+            if (TryUpdateModel<ARTICLEREPLY>(obj, "", frm.AllKeys, new string[] { })) {
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("details", "article", new { ID = obj.ARTICLE_ID });
             }
-            ViewBag.ARTICLE_ID = new SelectList(db.ARTICLE, "ID", "TITLE", aRTICLEREPLY.ARTICLE_ID);
-            return View(aRTICLEREPLY);
+                return View(obj);
         }
 
         // GET: reply/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Delete(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ARTICLEREPLY aRTICLEREPLY = db.ARTICLEREPLY.Find(id);
-            if (aRTICLEREPLY == null)
-            {
+            if (aRTICLEREPLY == null) {
                 return HttpNotFound();
             }
             return View(aRTICLEREPLY);
@@ -112,18 +97,15 @@ namespace Cowell_GuestBook.Controllers
         // POST: reply/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
+        public ActionResult DeleteConfirmed(int id) {
             ARTICLEREPLY aRTICLEREPLY = db.ARTICLEREPLY.Find(id);
             db.ARTICLEREPLY.Remove(aRTICLEREPLY);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
                 db.Dispose();
             }
             base.Dispose(disposing);
