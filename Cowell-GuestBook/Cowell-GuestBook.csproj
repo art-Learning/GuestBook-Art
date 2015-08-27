@@ -129,8 +129,23 @@
     <Compile Include="Models\ARTICLEREPLY.cs">
       <DependentUpon>GB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ARTICLEREPLYRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ARTICLERepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EFRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EFUnitOfWork.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Forum.cs">
       <DependentUpon>GB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ForumRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -146,6 +161,20 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IRepository.EF6.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IUnitOfWork.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RepositoryHelper.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RepositoryIQueryableExtensions.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -165,6 +194,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GB.edmx</DependentUpon>
       <LastGenOutput>GB.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\IRepository.EF6.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IRepository.EF6.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
