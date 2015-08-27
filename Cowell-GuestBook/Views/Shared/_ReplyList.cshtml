@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Cowell_GuestBook.Models.ARTICLEREPLY>
+
+<table class="table">
+
+    @{
+        int cnt = 0;
+    }
+    @foreach (var item in Model) {
+        cnt += 1;
+        <tr>
+            <td style="width:50px">@cnt</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AUTHOR)
+                ：
+                @Html.DisplayFor(modelItem => item.BODY)
+
+                <span class="pull-right">
+                    @Html.ActionLink("Edit", "Edit", "reply", new { id = item.ID }, new { @class = "btn btn-sm btn-default" })
+                    @Html.ActionLink("Delete", "Delete", "reply", new { id = item.ID }, new { @class = "btn btn-sm btn-default" })
+                </span>
+                <span class="pull-right"><small class="text-muted">@Html.DisplayFor(modelItem => item.BUD_DTM)</small></span>
+
+            </td>
+        </tr>
+    }
+
+</table>
+
